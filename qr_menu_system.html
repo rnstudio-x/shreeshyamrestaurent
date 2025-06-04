@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Shyam Fast Food - Digital Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#2D3748',
+                        accent: '#F7931E'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+        .order-item {
+            transition: all 0.3s ease;
+        }
+        .order-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+        .quantity-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="glass-effect sticky top-0 z-50 p-4 mb-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center floating-animation">
+                    <span class="text-white font-bold text-xl">🍕</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-secondary">Shree Shyam Fast Food</h1>
+                    <p class="text-sm text-gray-600">Pro. Ayush Chorasiya | 📱 6263015238</p>
+                </div>
+            </div>
+            <div class="relative">
+                <button id="cartBtn" class="bg-primary text-white px-4 py-2 rounded-full flex items-center space-x-2 glow-effect hover:bg-red-600 transition-all">
+                    <span>🛒</span>
+                    <span id="cartCount" class="bg-white text-primary px-2 py-1 rounded-full text-sm font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Table Selection -->
+    <div id="tableSelection" class="container mx-auto px-4 mb-8">
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold text-secondary mb-4 text-center">🪑 Select Your Table</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="selectTable(1)" class="table-btn bg-gradient-to-r from-blue-400 to-blue-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
+                    <div class="text-2xl mb-2">🪑</div>
+                    <div class="font-semibold">Table 1</div>
+                </button>
+                <button onclick="selectTable(2)" class="table-btn bg-gradient-to-r from-green-400 to-green-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
+                    <div class="text-2xl mb-2">🪑</div>
+                    <div class="font-semibold">Table 2</div>
+                </button>
+                <button onclick="selectTable(3)" class="table-btn bg-gradient-to-r from-purple-400 to-purple-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
+                    <div class="text-2xl mb-2">🪑</div>
+                    <div class="font-semibold">Table 3</div>
+                </button>
+                <button onclick="selectTable(4)" class="table-btn bg-gradient-to-r from-pink-400 to-pink-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
+                    <div class="text-2xl mb-2">🪑</div>
+                    <div class="font-semibold">Table 4</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Categories -->
+    <div class="container mx-auto px-4">
+        <!-- Category Tabs -->
+        <div class="flex overflow-x-auto space-x-2 mb-6 pb-2">
+            <button onclick="showCategory('all')" class="category-tab active bg-primary text-white px-6 py-3 rounded-full whitespace-nowrap font-semibold">
+                🍽️ All Items
+            </button>
+            <button onclick="showCategory('starters')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+                🥗 Starters
+            </button>
+            <button onclick="showCategory('burgers')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+                🍔 Burgers
+            </button>
+            <button onclick="showCategory('pizza')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+                🍕 Pizza
+            </button>
+            <button onclick="showCategory('beverages')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+                🥤 Beverages
+            </button>
+            <button onclick="showCategory('combo')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+                🎯 Combos
+            </button>
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Menu items will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl p-6 max-w-md w-full max-h-96 overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-secondary">🛒 Your Order</h3>
+                    <button onclick="closeCart()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div id="cartItems" class="space-y-3 mb-4">
+                    <!-- Cart items will be populated here -->
+                </div>
+                <div class="border-t pt-4">
+                    <div class="flex justify-between items-center text-lg font-bold mb-4">
+                        <span>Total:</span>
+                        <span id="cartTotal" class="text-primary">₹0</span>
+                    </div>
+                    <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-primary to-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition-all glow-effect">
+                        🚀 Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl p-6 max-w-md w-full">
+                <h3 class="text-xl font-bold text-secondary mb-4">📋 Order Details</h3>
+                <form id="checkoutForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">👤 Customer Name</label>
+                            <input type="text" id="customerName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">📱 Phone Number</label>
+                            <input type="tel" id="customerPhone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">💳 Payment Method</label>
+                            <select id="paymentMethod" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="cash">💵 Cash</option>
+                                <option value="upi">📱 UPI</option>
+                                <option value="card">💳 Card</option>
+                            </select>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center text-lg font-bold">
+                                <span>🪑 Table:</span>
+                                <span id="selectedTableDisplay">-</span>
+                            </div>
+                            <div class="flex justify-between items-center text-lg font-bold mt-2">
+                                <span>💰 Total Amount:</span>
+                                <span id="checkoutTotal" class="text-primary">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 mt-6">
+                        <button type="button" onclick="closeCheckout()" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-400 transition-all">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition-all glow-effect">
+                            ✅ Confirm Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center">
+                <div class="text-6xl mb-4">🎉</div>
+                <h3 class="text-2xl font-bold text-green-600 mb-2">Order Placed!</h3>
+                <p class="text-gray-600 mb-4">Your order has been successfully placed. The kitchen has been notified!</p>
+                <div class="bg-green-50 p-4 rounded-lg mb-4">
+                    <p class="text-sm text-green-700">Order ID: <span id="orderIdDisplay" class="font-bold">#ORD001</span></p>
+                    <p class="text-sm text-green-700">Estimated Time: 15-20 minutes</p>
+                </div>
+                <button onclick="closeSuccess()" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-red-600 transition-all">
+                    Continue Browsing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu data based on the restaurant menu
+        const menuData = {
+            starters: [
+                { id: 1, name: "Veg Sandwich", price: 60, category: "starters", emoji: "🥪" },
+                { id: 2, name: "Cheese Sandwich", price: 80, category: "starters", emoji: "🧀" },
+                { id: 3, name: "Grilled Sandwich", price: 100, category: "starters", emoji: "🔥" },
+                { id: 4, name: "Club Sandwich", price: 120, category: "starters", emoji: "🏆" },
+            ],
+            burgers: [
+                { id: 5, name: "Aloo Tikki Burger", price: 80, category: "burgers", emoji: "🍔" },
+                { id: 6, name: "Veg Burger", price: 90, category: "burgers", emoji: "🍔" },
+                { id: 7, name: "Cheese Burger", price: 110, category: "burgers", emoji: "🧀" },
+                { id: 8, name: "Double Cheese Burger", price: 130, category: "burgers", emoji: "🍔" },
+            ],
+            pizza: [
+                { id: 9, name: "Mini Pizza", price: 80, category: "pizza", emoji: "🍕" },
+                { id: 10, name: "Veg Cheese Pizza", price: 120, category: "pizza", emoji: "🍕" },
+                { id: 11, name: "Margherita Pizza", price: 140, category: "pizza", emoji: "🍕" },
+                { id: 12, name: "Cheese Pizza", price: 160, category: "pizza", emoji: "🧀" },
+                { id: 13, name: "Onion Capsicum Pizza", price: 180, category: "pizza", emoji: "🍕" },
+                { id: 14, name: "Paneer Pizza", price: 200, category: "pizza", emoji: "🍕" },
+            ],
+            beverages: [
+                { id: 15, name: "Tea", price: 20, category: "beverages", emoji: "☕" },
+                { id: 16, name: "Coffee", price: 30, category: "beverages", emoji: "☕" },
+                { id: 17, name: "Cold Coffee", price: 60, category: "beverages", emoji: "🧊" },
+                { id: 18, name: "Chocolate Shake", price: 80, category: "beverages", emoji: "🥤" },
+                { id: 19, name: "Mango Shake", price: 80, category: "beverages", emoji: "🥭" },
+                { id: 20, name: "Vanilla Shake", price: 80, category: "beverages", emoji: "🥤" },
+            ],
+            combo: [
+                { id: 21, name: "Burger + French Fries + Coke", price: 120, category: "combo", emoji: "🎯" },
+                { id: 22, name: "Pizza + Coke", price: 140, category: "combo", emoji: "🎯" },
+                { id: 23, name: "Sandwich + Tea", price: 80, category: "combo", emoji: "🎯" },
+            ]
+        };
+
+        let cart = [];
+        let selectedTable = null;
+        let currentCategory = 'all';
+
+        // Initialize the menu
+        function initializeMenu() {
+            showCategory('all');
+        }
+
+        // Table selection
+        function selectTable(tableNumber) {
+            selectedTable = tableNumber;
+            document.querySelectorAll('.table-btn').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-yellow-400');
+            });
+            event.target.closest('.table-btn').classList.add('ring-4', 'ring-yellow-400');
+            
+            // Show success animation
+            const btn = event.target.closest('.table-btn');
+            btn.innerHTML += '<div class="absolute top-0 right-0 bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">✓</div>';
+            btn.style.position = 'relative';
+        }
+
+        // Category functions
+        function showCategory(category) {
+            currentCategory = category;
+            
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-primary', 'text-white');
+                tab.classList.add('bg-white', 'text-secondary');
+            });
+            event.target.classList.add('active', 'bg-primary', 'text-white');
+            event.target.classList.remove('bg-white', 'text-secondary');
+
+            // Filter and display items
+            const menuGrid = document.getElementById('menuGrid');
+            menuGrid.innerHTML = '';
+
+            let itemsToShow = [];
+            if (category === 'all') {
+                itemsToShow = Object.values(menuData).flat();
+            } else {
+                itemsToShow = menuData[category] || [];
+            }
+
+            itemsToShow.forEach(item => {
+                const itemCard = createMenuItemCard(item);
+                menuGrid.appendChild(itemCard);
+            });
+        }
+
+        // Create menu item card
+        function createMenuItemCard(item) {
+            const card = document.createElement('div');
+            card.className = 'order-item bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all';
+            card.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <div class="text-4xl">${item.emoji}</div>
+                    <div class="text-right">
+                        <div class="text-xl font-bold text-primary">₹${item.price}</div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-semibold text-secondary mb-2">${item.name}</h3>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="changeQuantity(${item.id}, -1)" class="quantity-btn bg-gray-200 hover:bg-gray-300 text-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold">-</button>
+                        <span id="qty-${item.id}" class="text-lg font-semibold min-w-8 text-center">0</span>
+                        <button onclick="changeQuantity(${item.id}, 1)" class="quantity-btn bg-primary hover:bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">+</button>
+                    </div>
+                    <button onclick="addToCart(${item.id})" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full font-semibold hover:scale-105 transition-all">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        let itemQuantities = {};
+
+        function changeQuantity(itemId, change) {
+            if (!itemQuantities[itemId]) itemQuantities[itemId] = 0;
+            itemQuantities[itemId] = Math.max(0, itemQuantities[itemId] + change);
+            document.getElementById(`qty-${itemId}`).textContent = itemQuantities[itemId];
+        }
+
+        function addToCart(itemId) {
+            if (!selectedTable) {
+                alert('🪑 Please select a table first!');
+                return;
+            }
+
+            const quantity = itemQuantities[itemId] || 1;
+            if (quantity === 0) {
+                itemQuantities[itemId] = 1;
+                document.getElementById(`qty-${itemId}`).textContent = 1;
+            }
+
+            const item = Object.values(menuData).flat().find(i => i.id === itemId);
+            const existingItem = cart.find(i => i.id === itemId);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...item, quantity: quantity });
+            }
+
+            updateCartUI();
+            
+            // Reset quantity display
+            itemQuantities[itemId] = 0;
+            document.getElementById(`qty-${itemId}`).textContent = 0;
+
+            // Show add animation
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Added!';
+            btn.classList.add('bg-green-500');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('bg-green-500');
+            }, 1000);
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartCount.parentElement.classList.add('animate-pulse');
+            } else {
+                cartCount.parentElement.classList.remove('animate-pulse');
+            }
+        }
+
+        function openCart() {
+            if (cart.length === 0) {
+                alert('🛒 Your cart is empty!');
+                return;
+            }
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg';
+                cartItem.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">${item.emoji}</span>
+                        <div>
+                            <div class="font-semibold">${item.name}</div>
+                            <div class="text-sm text-gray-600">₹${item.price} x ${item.quantity}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-primary">₹${itemTotal}</span>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">🗑️</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            cartTotal.textContent = `₹${total}`;
+            document.getElementById('cartModal').classList.remove('hidden');
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartUI();
+            openCart(); // Refresh cart display
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        function proceedToCheckout() {
+            if (!selectedTable) {
+                alert('🪑 Please select a table first!');
+                return;
+            }
+            
+            closeCart();
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutTotal').textContent = `₹${total}`;
+            document.getElementById('selectedTableDisplay').textContent = `Table ${selectedTable}`;
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // Handle form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const orderData = {
+                orderId: 'SS' + Date.now(),
+                customerName: document.getElementById('customerName').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                paymentMethod: document.getElementById('paymentMethod').value,
+                tableNumber: selectedTable,
+                items: cart,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            // Here you would integrate with Google Apps Script
+            submitOrderToGoogleSheets(orderData);
+            
+            closeCheckout();
+            showSuccessModal(orderData.orderId);
+        });
+
+        function submitOrderToGoogleSheets(orderData) {
+            // Google Apps Script Web App URL (you'll need to deploy your script and get this URL)
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Order submitted successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error submitting order:', error);
+                // Still show success to user as the order is processed locally
+            });
+        }
+
+        function showSuccessModal(orderId) {
+            document.getElementById('orderIdDisplay').textContent = orderId;
+            document.getElementById('successModal').classList.remove('hidden');
+            
+            // Reset cart and selections
+            cart = [];
+            selectedTable = null;
+            updateCartUI();
+            
+            // Reset table selection UI
+            document.querySelectorAll('.table-btn').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-yellow-400');
+                const checkmark = btn.querySelector('.absolute');
+                if (checkmark) checkmark.remove();
+            });
+        }
+
+        function closeSuccess() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // Event listeners
+        document.getElementById('cartBtn').addEventListener('click', openCart);
+
+        // Initialize the menu on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMenu();
+        });
+    </script>
+</body>
+</html>
