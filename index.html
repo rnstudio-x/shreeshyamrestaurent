@@ -234,7 +234,7 @@
 
     <script>
         // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaTaqsSA0AAuGWut6PmXzARnxbh6A1wp8vSHBFsD1s0cxJh0m4Y-_vOzVY23_nVdTT7Q/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyF3NAgpmuIlZ6ZBDz-WVrkcIXAD-NfImCR5MfMBOq-CFOyg-j5xkMs1EMfSdJoUeuf-w/exec';
 
         // Menu data based on the restaurant menu
         const menuData = {
@@ -609,7 +609,7 @@
 
         // FIXED: Submit order to Google Sheets
         async function submitOrderToGoogleSheets(orderData) {
-            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('AKfycbwaTaqsSA0AAuGWut6PmXzARnxbh6A1wp8vSHBFsD1s0cxJh0m4Y-_vOzVY23_nVdTT7Q')) {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('AKfycbyF3NAgpmuIlZ6ZBDz-WVrkcIXAD-NfImCR5MfMBOq-CFOyg-j5xkMs1EMfSdJoUeuf-w')) {
                 throw new Error('Google Apps Script URL not configured');
             }
 
