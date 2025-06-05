@@ -234,7 +234,7 @@
 
     <script>
         // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7QScxTSfOWuS4fjnb2nQkOXe4J9aW2_H7hQBqh-PqUjnoJrca_PEz5a6VOMn79eb-_A/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw23l5lnefkB7UzxKPgtm34JMFPAuputFRtllWjKa4ELE0v0JUi_ZQpMDh2k71EtygP/exec';
 
         // Menu data based on the restaurant menu
         const menuData = {
@@ -625,7 +625,9 @@
             body: JSON.stringify(orderData)
         });
 
-        const result = await response.json();
+        const resultText = await response.text();
+        const result = JSON.parse(resultText);
+
         if (!result.success) {
             throw new Error(result.message || 'Order submission failed');
         }
