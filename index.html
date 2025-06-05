@@ -619,13 +619,16 @@
 
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
+            mode: 'cors', // allow CORS
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(orderData)
         });
 
         const resultText = await response.text();
+        console.log('Raw response text:', resultText);
+
         const result = JSON.parse(resultText);
 
         if (!result.success) {
