@@ -234,7 +234,7 @@
 
     <script>
         // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyF3NAgpmuIlZ6ZBDz-WVrkcIXAD-NfImCR5MfMBOq-CFOyg-j5xkMs1EMfSdJoUeuf-w/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwGG5LVHXlkhuOiwbiYm99DAthUl7caplhus4TlVudrIbOAddQaN2FV1uJFTJoSZSe1aQ/exec';
 
         // Menu data based on the restaurant menu
         const menuData = {
@@ -609,39 +609,34 @@
 
         // FIXED: Submit order to Google Sheets
         async function submitOrderToGoogleSheets(orderData) {
-            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('AKfycbyF3NAgpmuIlZ6ZBDz-WVrkcIXAD-NfImCR5MfMBOq-CFOyg-j5xkMs1EMfSdJoUeuf-w')) {
-                throw new Error('Google Apps Script URL not configured');
-            }
+    if (!GOOGLE_SCRIPT_URL) {
+        throw new Error('Google Apps Script URL not configured');
+    }
 
-            try {
-                console.log('Sending order to:', GOOGLE_SCRIPT_URL);
-                console.log('Order data:', orderData);
+    try {
+        console.log('Sending order to:', GOOGLE_SCRIPT_URL);
+        console.log('Order data:', orderData);
 
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Important for Google Apps Script
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(orderData)
-                });
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        });
 
-                // Since we're using no-cors mode, we can't read the response
-                // But if we reach this point, the request was sent successfully
-                console.log('Order submitted successfully');
-                
-                return {
-                    success: true,
-                    orderId: orderData.orderId,
-                    message: 'Order placed successfully!'
-                };
-
-            } catch (error) {
-                console.error('Network error:', error);
-                throw new Error('Network error: Unable to submit order');
-            }
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.message || 'Order submission failed');
         }
 
+        return result;
+
+    } catch (error) {
+        console.error('Network error:', error);
+        throw new Error('Network error: Unable to submit order');
+    }
+}
         // Show success modal
         function showSuccessModal(orderId) {
             document.getElementById('orderIdDisplay').textContent = orderId;
