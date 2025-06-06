@@ -579,48 +579,36 @@
             console.log('Submitting order:', orderData);
             
             // Submit to Google Apps Script
-            // Submit to Google Apps Script with improved error handling
-submitOrderToGoogleSheets(orderData)
-    .then(response => {
-        console.log('Order response:', response);
-        hideLoading();
-        closeCheckout();
-        showSuccessModal(orderData.orderId);
-        
-        // Clear cart and reset form after successful order
-        cart = [];
-        selectedTable = null;
-        itemQuantities = {};
-        updateCartUI();
-        document.getElementById('checkoutForm').reset();
-        
-        // Reset table selection
-        document.querySelectorAll('.table-btn').forEach(btn => {
-            btn.classList.remove('ring-4', 'ring-yellow-400');
-            const checkmark = btn.querySelector('.absolute');
-            if (checkmark) checkmark.remove();
-        });
-    })
-    .catch(error => {
-        console.error('Order submission failed:', error);
-        hideLoading();
-        
-        // More specific error messages
-        let errorMessage = 'Failed to place order. ';
-        if (error.message.includes('CORS')) {
-            errorMessage += 'Network access issue. Please try again or contact staff.';
-        } else if (error.message.includes('Network')) {
-            errorMessage += 'Check your internet connection and try again.';
-        } else {
-            errorMessage += error.message || 'Unknown error occurred.';
+            submitOrderToGoogleSheets(orderData)
+                .then(response => {
+                    console.log('Order response:', response);
+                    hideLoading();
+                    closeCheckout();
+                    showSuccessModal(orderData.orderId);
+                    
+                    // Clear cart and reset form after successful order
+                    cart = [];
+                    selectedTable = null;
+                    itemQuantities = {};
+                    updateCartUI();
+                    document.getElementById('checkoutForm').reset();
+                    
+                    // Reset table selection
+                    document.querySelectorAll('.table-btn').forEach(btn => {
+                        btn.classList.remove('ring-4', 'ring-yellow-400');
+                        const checkmark = btn.querySelector('.absolute');
+                        if (checkmark) checkmark.remove();
+                    });
+                })
+                .catch(error => {
+                    console.error('Order submission failed:', error);
+                    hideLoading();
+                    alert('Failed to place order. Please try again or contact staff.');
+                });
         }
-        
-        alert(errorMessage);
-    });
 
         // FIXED: Submit order to Google Sheets
-// FIXED: Submit order to Google Sheets
-async function submitOrderToGoogleSheets(orderData) {
+        async function submitOrderToGoogleSheets(orderData) {
     if (!GOOGLE_SCRIPT_URL) {
         throw new Error('Google Apps Script URL not configured');
     }
@@ -629,38 +617,19 @@ async function submitOrderToGoogleSheets(orderData) {
         console.log('Sending order to:', GOOGLE_SCRIPT_URL);
         console.log('Order data:', orderData);
 
-        // Create FormData to avoid CORS issues
-        const formData = new FormData();
-        formData.append('data', JSON.stringify(orderData));
-
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            body: formData,
-            redirect: 'follow'
+            mode: 'cors', // allow CORS
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderData)
         });
-
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
 
         const resultText = await response.text();
         console.log('Raw response text:', resultText);
 
-        // Handle both JSON and plain text responses
-        let result;
-        try {
-            result = JSON.parse(resultText);
-        } catch (parseError) {
-            // If it's not JSON, treat it as success if it contains success indicators
-            if (resultText.includes('success') || resultText.includes('Success')) {
-                result = { success: true, message: 'Order submitted successfully' };
-            } else {
-                throw new Error('Invalid response format: ' + resultText);
-            }
-        }
+        const result = JSON.parse(resultText);
 
         if (!result.success) {
             throw new Error(result.message || 'Order submission failed');
@@ -669,48 +638,8 @@ async function submitOrderToGoogleSheets(orderData) {
         return result;
 
     } catch (error) {
-        console.error('Submission error:', error);
-        
-        // If it's a CORS error, try alternative approach
-        if (error.message.includes('CORS') || error.message.includes('fetch')) {
-            return await submitOrderAlternative(orderData);
-        }
-        
-        throw error;
-    }
-}
-
-// Alternative submission method for CORS issues
-async function submitOrderAlternative(orderData) {
-    try {
-        // Create a hidden form and submit it
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = GOOGLE_SCRIPT_URL;
-        form.target = '_blank';
-        form.style.display = 'none';
-
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'data';
-        input.value = JSON.stringify(orderData);
-
-        form.appendChild(input);
-        document.body.appendChild(form);
-        
-        // Submit form in a new window/tab
-        form.submit();
-        
-        // Remove form after submission
-        setTimeout(() => {
-            document.body.removeChild(form);
-        }, 1000);
-
-        // Return success (we can't verify the actual submission with this method)
-        return { success: true, message: 'Order submitted (please check confirmation)' };
-        
-    } catch (error) {
-        throw new Error('Alternative submission failed: ' + error.message);
+        console.error('Network error:', error);
+        throw new Error('Network error: Unable to submit order');
     }
 }
         // Show success modal
