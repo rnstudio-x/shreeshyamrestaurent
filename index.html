@@ -49,6 +49,32 @@
         .quantity-btn:hover {
             transform: scale(1.1);
         }
+        //footer styles
+    .floating-orb {
+        animation: float 4s ease-in-out infinite;
+    }
+    
+    .floating-orb:nth-child(2) {
+        animation-delay: -1s;
+    }
+    
+    .floating-orb:nth-child(3) {
+        animation-delay: -2s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        25% { transform: translateY(-10px) scale(1.05); }
+        50% { transform: translateY(-5px) scale(0.95); }
+        75% { transform: translateY(-15px) scale(1.02); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .glass-effect {
+            backdrop-filter: blur(5px);
+        }
+    }
     </style>
 </head>
 <body class="bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50 min-h-screen">
@@ -231,10 +257,111 @@
             </div>
         </div>
     </div>
+    
+<!-- Footer Section - Add this before closing </body> tag -->
+<footer class="relative mt-16 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="floating-orb absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-xl animate-pulse"></div>
+            <div class="floating-orb absolute bottom-20 right-20 w-16 h-16 bg-gradient-to-r from-pink-400 to-red-500 rounded-full blur-lg animate-pulse delay-1000"></div>
+            <div class="floating-orb absolute top-1/2 left-1/3 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-md animate-pulse delay-2000"></div>
+        </div>
+    </div>
 
+    <!-- Main Footer Content -->
+    <div class="relative z-10 container mx-auto px-4 py-8">
+        <!-- Top Section -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+            <!-- Restaurant Info -->
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center floating-animation">
+                    <span class="text-white font-bold text-xl">🍕</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                        Shree Shyam Fast Food
+                    </h3>
+                    <p class="text-sm text-gray-300">Delicious Food, Happy Moments</p>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="flex space-x-6 text-center">
+                <div class="glass-effect px-4 py-2 rounded-lg">
+                    <div class="text-lg font-bold text-accent">100+</div>
+                    <div class="text-xs text-gray-300">Happy Customers</div>
+                </div>
+                <div class="glass-effect px-4 py-2 rounded-lg">
+                    <div class="text-lg font-bold text-green-400">4.8★</div>
+                    <div class="text-xs text-gray-300">Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-6"></div>
+
+        <!-- Designer Credit Section -->
+        <div class="text-center space-y-4">
+            <!-- Main Credit -->
+            <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-6">
+                    <!-- Designer Badge -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">RN</span>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-sm font-semibold text-white">Design & Maintained by</div>
+                            <div class="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                                RN Studio
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-400">📍</span>
+                            <span>Church Gali, Thandla, MP-45777</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-green-400">📱</span>
+                            <a href="tel:8239372489" class="hover:text-white transition-colors">8239372489</a>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-purple-400">🌐</span>
+                            <a href="https://rnstudio-x.github.io/portfolio" target="_blank" class="hover:text-white transition-colors hover:underline">
+                                Portfolio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="flex flex-col md:flex-row items-center justify-between text-xs text-gray-400">
+                <div class="mb-2 md:mb-0">
+                    © 2025 Shree Shyam Fast Food. All rights reserved.
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span>Made with ❤️ by RN Studio</span>
+                    <div class="flex space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-green-400">Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Glow Effect -->
+    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-50"></div>
+</footer>
     <script>
         // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQXET9ccaing-DpRc02voFJbZqAVf7T-7-rfBdiMglFH3E1PFPrbP8XWhPW9QGL-4Q/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4Sn9Xgm3Z_KCZELWe3wufUkRt05SFO9t15-N5PzHbBMF87lFhwQmuZlM-gztdUPJk/exec';
 
         // Menu data based on the restaurant menu
         const menuData = {
