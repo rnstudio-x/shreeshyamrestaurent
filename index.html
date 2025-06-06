@@ -234,7 +234,7 @@
 
     <script>
         // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfUgyfxyzVD2hp_wxdgF2Mz4VXOHfNHBs6cRFa10rYNw5TGzUd25lbmgMddzFGdxlU/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwp4Qsb7FDwPiet2Dt0CGJxcjprl_tAtFUwFT475R6p4uR9rPk67LHe9YeDu3QieILD/exec';
 
         // Menu data based on the restaurant menu
         const menuData = {
@@ -608,29 +608,26 @@
         }
 
         // FIXED: Submit order to Google Sheets
-        async function submitOrderToGoogleSheets(orderData) {
+       async function submitOrderToGoogleSheets(orderData) {
     if (!GOOGLE_SCRIPT_URL) {
         throw new Error('Google Apps Script URL not configured');
     }
 
     try {
-        console.log('Sending order to:', GOOGLE_SCRIPT_URL);
-        console.log('Order data:', orderData);
-
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            mode: 'cors', // allow CORS
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/plain', // Change this
             },
             body: JSON.stringify(orderData)
         });
 
-        const resultText = await response.text();
-        console.log('Raw response text:', resultText);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        const result = JSON.parse(resultText);
-
+        const result = await response.json();
+        
         if (!result.success) {
             throw new Error(result.message || 'Order submission failed');
         }
