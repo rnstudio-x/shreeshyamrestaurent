@@ -126,27 +126,52 @@
 
     <!-- Menu Categories -->
     <div class="container mx-auto px-4">
-        <!-- Category Tabs -->
-        <div class="flex overflow-x-auto space-x-2 mb-6 pb-2">
-            <button onclick="showCategory('all')" class="category-tab active bg-primary text-white px-6 py-3 rounded-full whitespace-nowrap font-semibold">
-                🍽️ All Items
-            </button>
-            <button onclick="showCategory('starters')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-                🥗 Starters
-            </button>
-            <button onclick="showCategory('burgers')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-                🍔 Burgers
-            </button>
-            <button onclick="showCategory('pizza')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-                🍕 Pizza
-            </button>
-            <button onclick="showCategory('beverages')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-                🥤 Beverages
-            </button>
-            <button onclick="showCategory('combo')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-                🎯 Combos
-            </button>
-        </div>
+  <!-- Category Tabs -->
+  <div class="flex overflow-x-auto space-x-2 mb-6 pb-2">
+    <button onclick="showCategory('all')" class="category-tab active bg-primary text-white px-6 py-3 rounded-full whitespace-nowrap font-semibold">
+      🍽️ All Items
+    </button>
+    <button onclick="showCategory('bakeSamosa')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🥟 Samosa
+    </button>
+    <button onclick="showCategory('burger')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍔 Burgers
+    </button>
+    <button onclick="showCategory('sandwich')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🥪 Sandwich
+    </button>
+    <button onclick="showCategory('frenchFries')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍟 Fries
+    </button>
+    <button onclick="showCategory('maggi')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍜 Maggi
+    </button>
+    <button onclick="showCategory('pizza')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍕 Pizza
+    </button>
+    <button onclick="showCategory('corn')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🌽 Corn
+    </button>
+    <button onclick="showCategory('bread')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍞 Bread
+    </button>
+    <button onclick="showCategory('bhel')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🥣 Bhel
+    </button>
+    <button onclick="showCategory('hotdog')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🌭 Hotdog
+    </button>
+    <button onclick="showCategory('pasta')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍝 Pasta
+    </button>
+    <button onclick="showCategory('shakesWithIceCream')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🍦 Shakes
+    </button>
+    <button onclick="showCategory('combo')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
+      🎯 Combos
+    </button>
+  </div>
+    </div>
 
         <!-- Menu Items Grid -->
         <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -364,45 +389,88 @@
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4Sn9Xgm3Z_KCZELWe3wufUkRt05SFO9t15-N5PzHbBMF87lFhwQmuZlM-gztdUPJk/exec';
 
         // Menu data based on the restaurant menu
-        const menuData = {
-            starters: [
-                { id: 1, name: "Veg Sandwich", price: 60, category: "starters", emoji: "🥪" },
-                { id: 2, name: "Cheese Veg Sandwich", price: 80, category: "starters", emoji: "🧀" },
-                { id: 3, name: "Grilled Sandwich", price: 100, category: "starters", emoji: "🔥" },
-                { id: 4, name: "Club Sandwich", price: 120, category: "starters", emoji: "🏆" },
-                { id: 25, name: "French Fries", price: 80, category: "starters", emoji: "🍟" },
-                { id: 26, name: "Masala French Fries", price: 100, category: "starters", emoji: "🍟" },
-                { id: 27, name: "Cheese French Fries", price: 120, category: "starters", emoji: "🍟" },
-            ],
-            burgers: [
-                { id: 5, name: "Aloo Tikki Burger", price: 80, category: "burgers", emoji: "🍔" },
-                { id: 6, name: "Veg Burger", price: 90, category: "burgers", emoji: "🍔" },
-                { id: 7, name: "Cheese Burger", price: 110, category: "burgers", emoji: "🧀" },
-                { id: 8, name: "Double Cheese Burger", price: 130, category: "burgers", emoji: "🍔" },
-            ],
-            pizza: [
-                { id: 9, name: "Mini Pizza", price: 80, category: "pizza", emoji: "🍕" },
-                { id: 10, name: "Veg Cheese Pizza", price: 120, category: "pizza", emoji: "🍕" },
-                { id: 11, name: "Margherita Pizza", price: 140, category: "pizza", emoji: "🍕" },
-                { id: 12, name: "Cheese Pizza", price: 160, category: "pizza", emoji: "🧀" },
-                { id: 13, name: "Onion Capsicum Pizza", price: 180, category: "pizza", emoji: "🍕" },
-                { id: 14, name: "Paneer Pizza", price: 200, category: "pizza", emoji: "🍕" },
-            ],
-            beverages: [
-                { id: 15, name: "Tea", price: 20, category: "beverages", emoji: "☕" },
-                { id: 16, name: "Coffee", price: 30, category: "beverages", emoji: "☕" },
-                { id: 17, name: "Cold Coffee", price: 60, category: "beverages", emoji: "🧊" },
-                { id: 18, name: "Chocolate Shake", price: 80, category: "beverages", emoji: "🥤" },
-                { id: 19, name: "Mango Shake", price: 80, category: "beverages", emoji: "🥭" },
-                { id: 20, name: "Vanilla Shake", price: 80, category: "beverages", emoji: "🥤" },
-            ],
-            combo: [
-                { id: 21, name: "Masala Maggi + French Fries + Coke", price: 120, category: "combo", emoji: "🎯" },
-                { id: 22, name: "Manchurian + Veg Noodles + Coke", price: 190, category: "combo", emoji: "🎯" },
-                { id: 23, name: "Veg Cheese Pizza + Veg Samosa + Vanilla Shake", price: 200, category: "combo", emoji: "🎯" },
-                { id: 24, name: "Masala Sandwich + Aloo Tikki Burger", price: 140, category: "combo", emoji: "🎯" },
-            ]
-        };
+      const menuData = {
+  bakeSamosa: [
+    { id: 1, name: "Veg Samosa", price: 20, category: "bakeSamosa", emoji: "🥟" },
+    { id: 2, name: "Paneer Samosa", price: 30, category: "bakeSamosa", emoji: "🥟" },
+    { id: 3, name: "Cheese Samosa", price: 40, category: "bakeSamosa", emoji: "🧀" },
+    { id: 4, name: "Burger Samosa", price: 50, category: "bakeSamosa", emoji: "🍔" },
+  ],
+  burger: [
+    { id: 5, name: "Aloo Tikki Burger", price: 40, category: "burger", emoji: "🍔" },
+    { id: 6, name: "Veg Burger", price: 50, category: "burger", emoji: "🍔" },
+    { id: 7, name: "Cheese Burger", price: 60, category: "burger", emoji: "🧀" },
+    { id: 8, name: "Double Cheese Burger", price: 80, category: "burger", emoji: "🍔" },
+  ],
+  sandwich: [
+    { id: 9, name: "Masala Sandwich", price: 60, category: "sandwich", emoji: "🥪" },
+    { id: 10, name: "Veg Grill Sandwich", price: 70, category: "sandwich", emoji: "🔥" },
+    { id: 11, name: "Cheese Sandwich", price: 80, category: "sandwich", emoji: "🧀" },
+    { id: 12, name: "Paneer Sandwich", price: 90, category: "sandwich", emoji: "🥪" },
+    { id: 13, name: "Cheese Paneer Sandwich", price: 100, category: "sandwich", emoji: "🧀" },
+    { id: 14, name: "Double Cheese Chutney Sandwich", price: 120, category: "sandwich", emoji: "🧀" },
+    { id: 15, name: "Shyam Special Club Sandwich", price: 120, category: "sandwich", emoji: "⭐" },
+  ],
+  frenchFries: [
+    { id: 16, name: "French Fries", price: 80, category: "fries", emoji: "🍟" },
+    { id: 17, name: "Masala Fries", price: 100, category: "fries", emoji: "🍟" },
+    { id: 18, name: "Cheese Fries", price: 120, category: "fries", emoji: "🧀" },
+  ],
+  maggi: [
+    { id: 19, name: "Plain Maggi", price: 60, category: "maggi", emoji: "🍜" },
+    { id: 20, name: "Masala Maggi", price: 70, category: "maggi", emoji: "🌶️" },
+    { id: 21, name: "Cheese Maggi", price: 90, category: "maggi", emoji: "🧀" },
+    { id: 22, name: "Paneer Maggi", price: 100, category: "maggi", emoji: "🍲" },
+  ],
+  pizza: [
+    { id: 23, name: "Mini Pizza", price: 80, category: "pizza", emoji: "🍕" },
+    { id: 24, name: "Veg Pizza", price: 100, category: "pizza", emoji: "🍕" },
+    { id: 25, name: "Cheese Pizza", price: 120, category: "pizza", emoji: "🧀" },
+    { id: 26, name: "Onion Capsicum Pizza", price: 140, category: "pizza", emoji: "🍕" },
+    { id: 27, name: "Corn Cheese Pizza", price: 150, category: "pizza", emoji: "🌽" },
+    { id: 28, name: "Paneer Cheese Pizza", price: 160, category: "pizza", emoji: "🍕" },
+    { id: 29, name: "Double Cheese Pizza", price: 180, category: "pizza", emoji: "🧀" },
+    { id: 30, name: "Shyam Special Pizza", price: 200, category: "pizza", emoji: "⭐" },
+    { id: 31, name: "Cheese Burst Pizza", price: 240, category: "pizza", emoji: "🌋" },
+  ],
+  corn: [
+    { id: 32, name: "Sweet Corn", price: 40, category: "corn", emoji: "🌽" },
+    { id: 33, name: "Masala Corn", price: 60, category: "corn", emoji: "🌽" },
+  ],
+  bread: [
+    { id: 34, name: "Cheese Garlic Bread", price: 70, category: "bread", emoji: "🍞" },
+    { id: 35, name: "Paneer Garlic Bread", price: 80, category: "bread", emoji: "🧄" },
+  ],
+  bhel: [
+    { id: 36, name: "Cheese Bhel", price: 60, category: "bhel", emoji: "🥣" },
+    { id: 37, name: "Chips Chat Bhel", price: 50, category: "bhel", emoji: "🍲" },
+  ],
+  hotdog: [
+    { id: 38, name: "Masala Hotdog", price: 60, category: "hotdog", emoji: "🌭" },
+    { id: 39, name: "Cheese Hotdog", price: 70, category: "hotdog", emoji: "🧀" },
+    { id: 40, name: "Paneer Hotdog", price: 80, category: "hotdog", emoji: "🍖" },
+    { id: 41, name: "Cheese Paneer Hotdog", price: 90, category: "hotdog", emoji: "🧀" },
+  ],
+  pasta: [
+    { id: 42, name: "Red Sauce Pasta", price: 140, category: "pasta", emoji: "🍝" },
+    { id: 43, name: "White Sauce Pasta", price: 160, category: "pasta", emoji: "🍝" },
+  ],
+  shakesWithIceCream: [
+    { id: 44, name: "Oreo Shake with Ice Cream", price: 100, category: "shake", emoji: "🍪" },
+    { id: 45, name: "Chocolate Shake with Ice Cream", price: 100, category: "shake", emoji: "🍫" },
+    { id: 46, name: "Strawberry Shake with Ice Cream", price: 100, category: "shake", emoji: "🍓" },
+    { id: 47, name: "Vanilla Shake with Ice Cream", price: 100, category: "shake", emoji: "🍦" },
+    { id: 48, name: "Butter Scotch Shake with Ice Cream", price: 100, category: "shake", emoji: "🍮" },
+    { id: 49, name: "KitKat Shake with Ice Cream", price: 100, category: "shake", emoji: "🍫" },
+    { id: 50, name: "5 Star Chocolate Shake with Ice Cream", price: 100, category: "shake", emoji: "⭐" },
+  ],
+  combo: [
+    { id: 51, name: "Masala Maggi + Fries + Coke", price: 120, category: "combo", emoji: "🎯" },
+    { id: 52, name: "Masala Sandwich + Aloo Tikki Burger", price: 140, category: "combo", emoji: "🎯" },
+    { id: 53, name: "Veg Cheese Pizza + Samosa + Vanilla Shake", price: 200, category: "combo", emoji: "🎯" },
+    { id: 54, name: "Manchurian + Veg Noodles + Coke", price: 190, category: "combo", emoji: "🎯" },
+  ],
+};
 
         let cart = [];
         let selectedTable = null;
