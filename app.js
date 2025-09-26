@@ -1191,8 +1191,7 @@ function sendToGoogleSheets(sheetName, data) {
   console.log(`Sending to ${sheetName}:`, data);
   
   // Placeholder for Google Apps Script integration
-  /*
-  const scriptUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycby3TyJGvOwXoHBzITaHJOtpmVfPb_Hj9W8p3DTtfgzUAC3mcVWWRQr2bmovJPek7I_sig/exec';
   fetch(scriptUrl, {
     method: 'POST',
     headers: {
@@ -1210,7 +1209,6 @@ function sendToGoogleSheets(sheetName, data) {
   .catch(error => {
     console.error('Error:', error);
   });
-  */
 }
 
 // Close modals when clicking outside
