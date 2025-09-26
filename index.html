@@ -3,884 +3,644 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shree Shyam Fast Food - Digital Menu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF6B35',
-                        secondary: '#2D3748',
-                        accent: '#F7931E'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .floating-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .glow-effect {
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-        }
-        .order-item {
-            transition: all 0.3s ease;
-        }
-        .order-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        .quantity-btn {
-            transition: all 0.2s ease;
-        }
-        .quantity-btn:hover {
-            transform: scale(1.1);
-        }
-        //footer styles
-    .floating-orb {
-        animation: float 4s ease-in-out infinite;
-    }
-    
-    .floating-orb:nth-child(2) {
-        animation-delay: -1s;
-    }
-    
-    .floating-orb:nth-child(3) {
-        animation-delay: -2s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0px) scale(1); }
-        25% { transform: translateY(-10px) scale(1.05); }
-        50% { transform: translateY(-5px) scale(0.95); }
-        75% { transform: translateY(-15px) scale(1.02); }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .glass-effect {
-            backdrop-filter: blur(5px);
-        }
-    }
-    </style>
+    <title>RN PhotoFilms - Professional Photography Services</title>
+    <meta name="description" content="Professional wedding, pre-wedding, event and portrait photography services by RN PhotoFilms. Capturing your precious moments with artistic excellence.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50 min-h-screen">
-    <!-- Header -->
-    <header class="glass-effect sticky top-0 z-50 p-4 mb-6">
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center floating-animation">
-                    <span class="text-white font-bold text-xl">🍕</span>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-secondary">Shree Shyam Fast Food</h1>
-                    <p class="text-sm text-gray-600">Pro. Ayush Chorasiya | 📱 6263015238</p>
-                </div>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>RN PhotoFilms</h2>
             </div>
-            <div class="relative">
-                <button onclick="openCart()" class="bg-primary text-white px-4 py-2 rounded-full flex items-center space-x-2 glow-effect hover:bg-red-600 transition-all">
-                    <span>🛒</span>
-                    <span id="cartCount" class="bg-white text-primary px-2 py-1 rounded-full text-sm font-bold">0</span>
-                </button>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#blog" class="nav-link">Blog</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button class="btn btn--primary" onclick="showAdminLogin()">Admin</button>
             </div>
-        </div>
-    </header>
-
-    <!-- Table Selection -->
-    <div id="tableSelection" class="container mx-auto px-4 mb-8">
-        <div class="bg-white rounded-2xl p-6 shadow-lg">
-            <h2 class="text-xl font-bold text-secondary mb-4 text-center">🪑 Select Your Table</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onclick="selectTable(1)" class="table-btn bg-gradient-to-r from-blue-400 to-blue-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
-                    <div class="text-2xl mb-2">🪑</div>
-                    <div class="font-semibold">Table 1</div>
-                </button>
-                <button onclick="selectTable(2)" class="table-btn bg-gradient-to-r from-green-400 to-green-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
-                    <div class="text-2xl mb-2">🪑</div>
-                    <div class="font-semibold">Table 2</div>
-                </button>
-                <button onclick="selectTable(3)" class="table-btn bg-gradient-to-r from-purple-400 to-purple-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
-                    <div class="text-2xl mb-2">🪑</div>
-                    <div class="font-semibold">Table 3</div>
-                </button>
-                <button onclick="selectTable(4)" class="table-btn bg-gradient-to-r from-pink-400 to-pink-600 text-white p-4 rounded-xl hover:scale-105 transition-all">
-                    <div class="text-2xl mb-2">🪑</div>
-                    <div class="font-semibold">Table 4</div>
-                </button>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- Menu Categories -->
-    <div class="container mx-auto px-4">
-  <!-- Category Tabs -->
-  <div class="flex overflow-x-auto space-x-2 mb-6 pb-2">
-    <button onclick="showCategory('all')" class="category-tab active bg-primary text-white px-6 py-3 rounded-full whitespace-nowrap font-semibold">
-      🍽️ All Items
-    </button>
-    <button onclick="showCategory('bakeSamosa')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🥟 Samosa
-    </button>
-    <button onclick="showCategory('burger')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍔 Burgers
-    </button>
-    <button onclick="showCategory('sandwich')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🥪 Sandwich
-    </button>
-    <button onclick="showCategory('frenchFries')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍟 Fries
-    </button>
-    <button onclick="showCategory('maggi')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍜 Maggi
-    </button>
-    <button onclick="showCategory('pizza')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍕 Pizza
-    </button>
-    <button onclick="showCategory('corn')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🌽 Corn
-    </button>
-    <button onclick="showCategory('bread')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍞 Bread
-    </button>
-    <button onclick="showCategory('bhel')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🥣 Bhel
-    </button>
-    <button onclick="showCategory('hotdog')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🌭 Hotdog
-    </button>
-    <button onclick="showCategory('pasta')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍝 Pasta
-    </button>
-    <button onclick="showCategory('shakesWithIceCream')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🍦 Shakes
-    </button>
-    <button onclick="showCategory('combo')" class="category-tab bg-white text-secondary px-6 py-3 rounded-full whitespace-nowrap hover:bg-gray-100">
-      🎯 Combos
-    </button>
-  </div>
-    </div>
-
-        <!-- Menu Items Grid -->
-        <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Menu items will be populated by JavaScript -->
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl p-6 max-w-md w-full max-h-96 overflow-y-auto">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold text-secondary">🛒 Your Order</h3>
-                    <button onclick="closeCart()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-                </div>
-                <div id="cartItems" class="space-y-3 mb-4">
-                    <!-- Cart items will be populated here -->
-                </div>
-                <div class="border-t pt-4">
-                    <div class="flex justify-between items-center text-lg font-bold mb-4">
-                        <span>Total:</span>
-                        <span id="cartTotal" class="text-primary">₹0</span>
-                    </div>
-                    <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-primary to-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition-all glow-effect">
-                        🚀 Place Order
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Crafting <span class="highlight">Timeless</span> 
+                    <br>Visual Stories
+                </h1>
+                <p class="hero-subtitle">
+                    Professional photography that captures your most precious moments with artistic flair and cinematic excellence. From weddings to portraits, we create memories that last forever.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn--primary btn--lg" onclick="showBookingForm()">
+                        <span class="btn-text">Book Your Session</span>
+                        <span class="btn-loader hidden">...</span>
+                    </button>
+                    <button class="btn btn--outline btn--lg" onclick="showContactForm()">
+                        <span class="btn-text">Get in Touch</span>
+                        <span class="btn-loader hidden">...</span>
                     </button>
                 </div>
             </div>
+            <div class="hero-visual">
+                <div class="hero-gallery">
+                    <div class="hero-image hero-image--1">
+                        <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=300&h=400&fit=crop" alt="Wedding Photography">
+                    </div>
+                    <div class="hero-image hero-image--2">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=250&h=350&fit=crop" alt="Pre-wedding Photography">
+                    </div>
+                    <div class="hero-image hero-image--3">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=280&h=300&fit=crop" alt="Event Photography">
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Happy Couples</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9★</span>
+                        <span class="stat-label">Client Rating</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="hero-scroll">
+            <span>Scroll to explore</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
 
-    <!-- Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl p-6 max-w-md w-full">
-                <h3 class="text-xl font-bold text-secondary mb-4">📋 Order Details</h3>
-                <form id="checkoutForm">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">👤 Customer Name</label>
-                            <input type="text" id="customerName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">📱 Phone Number</label>
-                            <input type="tel" id="customerPhone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">📧 Email (Optional)</label>
-                            <input type="email" id="customerEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">💳 Payment Method</label>
-                            <select id="paymentMethod" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="cash">💵 Cash</option>
-                                <option value="upi">📱 UPI</option>
-                                <option value="card">💳 Card</option>
-                            </select>
-                        </div>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <div class="flex justify-between items-center text-lg font-bold">
-                                <span>🪑 Table:</span>
-                                <span id="selectedTableDisplay">-</span>
-                            </div>
-                            <div class="flex justify-between items-center text-lg font-bold mt-2">
-                                <span>💰 Total Amount:</span>
-                                <span id="checkoutTotal" class="text-primary">₹0</span>
-                            </div>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Professional photography services tailored to your needs</p>
+            </div>
+            <div class="services-grid" id="services-grid">
+                <!-- Services will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Gallery</h2>
+                <p class="section-subtitle">A showcase of our finest work</p>
+            </div>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="wedding">Wedding</button>
+                <button class="filter-btn" data-filter="prewedding">Pre-Wedding</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="portraits">Portraits</button>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery images will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">Meet the creative minds behind every shot</p>
+            </div>
+            <div class="team-grid" id="team-grid">
+                <!-- Team members will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest Blog Posts</h2>
+                <p class="section-subtitle">Tips, insights, and inspiration from our photographers</p>
+            </div>
+            <div class="blog-grid" id="blog-grid">
+                <!-- Blog posts will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">Ready to capture your special moments? Let's talk!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Thandla, Madhya Pradesh, India</p>
                         </div>
                     </div>
-                    <div class="flex space-x-3 mt-6">
-                        <button type="button" onclick="closeCheckout()" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-400 transition-all">
-                            Cancel
-                        </button>
-                        <button type="submit" class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition-all glow-effect">
-                            ✅ Confirm Order
-                        </button>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+91 7828720365</p>
+                        </div>
                     </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>rnstudio.x@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📸</div>
+                        <div class="contact-details">
+                            <h4>Instagram</h4>
+                            <p>@rn.photo.films</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>RN PhotoFilms</h3>
+                    <p>Creating timeless visual stories with passion and precision</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <a href="#services">Services</a>
+                        <a href="#gallery">Gallery</a>
+                        <a href="#team">Team</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <a href="#services">Wedding Photography</a>
+                        <a href="#services">Pre-Wedding Shoots</a>
+                        <a href="#services">Event Photography</a>
+                        <a href="#services">Portraits</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RN PhotoFilms. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel hidden">
+        <!-- Admin Login -->
+        <div id="admin-login" class="admin-section">
+            <div class="admin-login-form">
+                <h2>Admin Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="admin-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="admin-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Login</button>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center">
-                <div class="text-6xl mb-4">🎉</div>
-                <h3 class="text-2xl font-bold text-green-600 mb-2">Order Placed!</h3>
-                <p class="text-gray-600 mb-4">Your order has been successfully placed. The kitchen has been notified!</p>
-                <div class="bg-green-50 p-4 rounded-lg mb-4">
-                    <p class="text-sm text-green-700">Order ID: <span id="orderIdDisplay" class="font-bold">#ORD001</span></p>
-                    <p class="text-sm text-green-700">Estimated Time: 15-20 minutes</p>
-                </div>
-                <button onclick="closeSuccess()" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-red-600 transition-all">
-                    Continue Browsing
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Loading Modal -->
-    <div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 z-60 hidden">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="bg-white rounded-2xl p-8 text-center">
-                <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
-                <p class="text-lg font-semibold text-gray-700">Processing your order...</p>
-                <p class="text-sm text-gray-500">Please wait while we confirm your order</p>
-            </div>
-        </div>
-    </div>
-    
-<!-- Footer Section - Add this before closing </body> tag -->
-<footer class="relative mt-16 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
-    <!-- Animated Background Elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-full h-full">
-            <div class="floating-orb absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-xl animate-pulse"></div>
-            <div class="floating-orb absolute bottom-20 right-20 w-16 h-16 bg-gradient-to-r from-pink-400 to-red-500 rounded-full blur-lg animate-pulse delay-1000"></div>
-            <div class="floating-orb absolute top-1/2 left-1/3 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-md animate-pulse delay-2000"></div>
-        </div>
-    </div>
-
-    <!-- Main Footer Content -->
-    <div class="relative z-10 container mx-auto px-4 py-8">
-        <!-- Top Section -->
-        <div class="flex flex-col md:flex-row items-center justify-between mb-6">
-            <!-- Restaurant Info -->
-            <div class="flex items-center space-x-3 mb-4 md:mb-0">
-                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center floating-animation">
-                    <span class="text-white font-bold text-xl">🍕</span>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                        Shree Shyam Fast Food
-                    </h3>
-                    <p class="text-sm text-gray-300">Delicious Food, Happy Moments</p>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="flex space-x-6 text-center">
-                <div class="glass-effect px-4 py-2 rounded-lg">
-                    <div class="text-lg font-bold text-accent">100+</div>
-                    <div class="text-xs text-gray-300">Happy Customers</div>
-                </div>
-                <div class="glass-effect px-4 py-2 rounded-lg">
-                    <div class="text-lg font-bold text-green-400">4.8★</div>
-                    <div class="text-xs text-gray-300">Rating</div>
-                </div>
+                <button class="admin-close" onclick="hideAdminPanel()">×</button>
             </div>
         </div>
 
-        <!-- Divider -->
-        <div class="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-6"></div>
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="admin-section hidden">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <button class="btn btn--outline" onclick="hideAdminPanel()">Close Dashboard</button>
+            </div>
 
-        <!-- Designer Credit Section -->
-        <div class="text-center space-y-4">
-            <!-- Main Credit -->
-            <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-                <div class="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-6">
-                    <!-- Designer Badge -->
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">RN</span>
+            <!-- Admin Navigation -->
+            <nav class="admin-nav">
+                <button class="admin-nav-btn active" data-section="overview">Dashboard</button>
+                <button class="admin-nav-btn" data-section="bookings">Bookings</button>
+                <button class="admin-nav-btn" data-section="clients">Clients</button>
+                <button class="admin-nav-btn" data-section="team-management">Team</button>
+                <button class="admin-nav-btn" data-section="analytics">Analytics</button>
+                <button class="admin-nav-btn" data-section="finance">Finance</button>
+                <button class="admin-nav-btn" data-section="crm">CRM</button>
+            </nav>
+
+            <div class="admin-content">
+                <!-- Dashboard Overview -->
+                <div id="admin-overview" class="admin-content-section active">
+                    <div class="metrics-grid" id="metrics-grid">
+                        <!-- Metrics will be populated by JavaScript -->
+                    </div>
+                    <div class="recent-bookings">
+                        <h3>Recent Bookings</h3>
+                        <div class="table-container">
+                            <table class="admin-table" id="recent-bookings-table">
+                                <!-- Table will be populated by JavaScript -->
+                            </table>
                         </div>
-                        <div class="text-left">
-                            <div class="text-sm font-semibold text-white">Design & Maintained by</div>
-                            <div class="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                                RN Studio
+                    </div>
+                </div>
+
+                <!-- Bookings Management -->
+                <div id="admin-bookings" class="admin-content-section">
+                    <div class="section-actions">
+                        <h2>Booking Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn--primary" onclick="showAddBookingForm()">Add New Booking</button>
+                            <button class="btn btn--outline" onclick="exportBookings()">Export Bookings</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="admin-table" id="bookings-table">
+                            <!-- Bookings table will be populated by JavaScript -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Clients Management -->
+                <div id="admin-clients" class="admin-content-section">
+                    <div class="section-actions">
+                        <h2>Client Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn--primary" onclick="showAddClientForm()">Add Client</button>
+                            <button class="btn btn--outline" onclick="sendBirthdayReminders()">Birthday Reminders</button>
+                            <button class="btn btn--outline" onclick="sendAnniversaryReminders()">Anniversary Reminders</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="admin-table" id="clients-table">
+                            <!-- Clients table will be populated by JavaScript -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Team Management -->
+                <div id="admin-team-management" class="admin-content-section">
+                    <div class="section-actions">
+                        <h2>Team Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn--primary" onclick="showAddTeamMemberForm()">Add Team Member</button>
+                            <button class="btn btn--outline" onclick="markAttendance()">Mark Attendance</button>
+                        </div>
+                    </div>
+                    <div class="team-management-grid" id="team-management-grid">
+                        <!-- Team management cards will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Analytics -->
+                <div id="admin-analytics" class="admin-content-section">
+                    <h2>Analytics</h2>
+                    <div class="analytics-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Revenue Chart</h3>
+                                <canvas id="revenue-chart" style="position: relative; height: 300px;"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Booking Trends</h3>
+                                <canvas id="bookings-chart" style="position: relative; height: 300px;"></canvas>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Contact Info -->
-                    <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm text-gray-300">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-blue-400">📍</span>
-                            <span>Church Gali, Thandla, MP-45777</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-green-400">📱</span>
-                            <a href="tel:8239372489" class="hover:text-white transition-colors">8239372489</a>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-purple-400">🌐</span>
-                            <a href="https://rnstudio-x.github.io/portfolio" target="_blank" class="hover:text-white transition-colors hover:underline">
-                                Portfolio
-                            </a>
+                <!-- Finance -->
+                <div id="admin-finance" class="admin-content-section">
+                    <div class="section-actions">
+                        <h2>Finance Management</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn--primary" onclick="showAddExpenseForm()">Add Expense</button>
+                            <button class="btn btn--outline" onclick="generateFinanceReport()">Generate Report</button>
                         </div>
                     </div>
+                    <div class="finance-overview">
+                        <div class="finance-card">
+                            <h4>Total Revenue</h4>
+                            <span class="finance-amount">₹5,25,000</span>
+                        </div>
+                        <div class="finance-card">
+                            <h4>Total Expenses</h4>
+                            <span class="finance-amount">₹1,75,000</span>
+                        </div>
+                        <div class="finance-card">
+                            <h4>Net Profit</h4>
+                            <span class="finance-amount">₹3,50,000</span>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="admin-table" id="expenses-table">
+                            <!-- Expenses table will be populated by JavaScript -->
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Copyright -->
-            <div class="flex flex-col md:flex-row items-center justify-between text-xs text-gray-400">
-                <div class="mb-2 md:mb-0">
-                    © 2025 Shree Shyam Fast Food. All rights reserved.
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span>Made with ❤️ by RN Studio</span>
-                    <div class="flex space-x-2">
-                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="text-green-400">Online</span>
+                <!-- CRM -->
+                <div id="admin-crm" class="admin-content-section">
+                    <div class="section-actions">
+                        <h2>CRM System</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn--primary" onclick="addLead()">Add Lead</button>
+                            <button class="btn btn--outline" onclick="setupAutomation()">Setup Automation</button>
+                            <button class="btn btn--outline" onclick="exportCRM()">Export CRM</button>
+                        </div>
+                    </div>
+                    <div class="crm-pipeline" id="crm-pipeline">
+                        <!-- CRM pipeline will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Glow Effect -->
-    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-50"></div>
-</footer>
-    <script>
-        // Configuration - Update this with your actual Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4Sn9Xgm3Z_KCZELWe3wufUkRt05SFO9t15-N5PzHbBMF87lFhwQmuZlM-gztdUPJk/exec';
+    <!-- Modals -->
+    <!-- Booking Form Modal -->
+    <div id="booking-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Your Session</h3>
+                <button class="modal-close" onclick="hideModal('booking-modal')">×</button>
+            </div>
+            <form id="booking-form" class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" id="booking-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" id="booking-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone *</label>
+                    <input type="tel" id="booking-phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Service Type *</label>
+                    <select id="booking-service" class="form-control" required>
+                        <option value="">Select Service</option>
+                        <option value="wedding">Wedding Photography</option>
+                        <option value="prewedding">Pre-Wedding Shoot</option>
+                        <option value="events">Event Photography</option>
+                        <option value="portraits">Portrait Photography</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Event Date</label>
+                    <input type="date" id="booking-date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Package</label>
+                    <select id="booking-package" class="form-control">
+                        <option value="">Select Package</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Additional Notes</label>
+                    <textarea id="booking-notes" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">
+                    <span class="btn-text">Submit Booking</span>
+                    <span class="btn-loader hidden">Submitting...</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
-        // Menu data based on the restaurant menu
-      const menuData = {
-  bakeSamosa: [
-    { id: 1, name: "Veg Samosa", price: 20, category: "bakeSamosa", emoji: "🥟" },
-    { id: 2, name: "Paneer Samosa", price: 30, category: "bakeSamosa", emoji: "🥟" },
-    { id: 3, name: "Cheese Samosa", price: 40, category: "bakeSamosa", emoji: "🧀" },
-    { id: 4, name: "Burger Samosa", price: 50, category: "bakeSamosa", emoji: "🍔" },
-  ],
-  burger: [
-    { id: 5, name: "Aloo Tikki Burger", price: 40, category: "burger", emoji: "🍔" },
-    { id: 6, name: "Veg Burger", price: 50, category: "burger", emoji: "🍔" },
-    { id: 7, name: "Cheese Burger", price: 60, category: "burger", emoji: "🧀" },
-    { id: 8, name: "Double Cheese Burger", price: 80, category: "burger", emoji: "🍔" },
-  ],
-  sandwich: [
-    { id: 9, name: "Masala Sandwich", price: 60, category: "sandwich", emoji: "🥪" },
-    { id: 10, name: "Veg Grill Sandwich", price: 70, category: "sandwich", emoji: "🔥" },
-    { id: 11, name: "Cheese Sandwich", price: 80, category: "sandwich", emoji: "🧀" },
-    { id: 12, name: "Paneer Sandwich", price: 90, category: "sandwich", emoji: "🥪" },
-    { id: 13, name: "Cheese Paneer Sandwich", price: 100, category: "sandwich", emoji: "🧀" },
-    { id: 14, name: "Double Cheese Chutney Sandwich", price: 120, category: "sandwich", emoji: "🧀" },
-    { id: 15, name: "Shyam Special Club Sandwich", price: 120, category: "sandwich", emoji: "⭐" },
-  ],
-  frenchFries: [
-    { id: 16, name: "French Fries", price: 80, category: "fries", emoji: "🍟" },
-    { id: 17, name: "Masala Fries", price: 100, category: "fries", emoji: "🍟" },
-    { id: 18, name: "Cheese Fries", price: 120, category: "fries", emoji: "🧀" },
-  ],
-  maggi: [
-    { id: 19, name: "Plain Maggi", price: 60, category: "maggi", emoji: "🍜" },
-    { id: 20, name: "Masala Maggi", price: 70, category: "maggi", emoji: "🌶️" },
-    { id: 21, name: "Cheese Maggi", price: 90, category: "maggi", emoji: "🧀" },
-    { id: 22, name: "Paneer Maggi", price: 100, category: "maggi", emoji: "🍲" },
-  ],
-  pizza: [
-    { id: 23, name: "Mini Pizza", price: 80, category: "pizza", emoji: "🍕" },
-    { id: 24, name: "Veg Pizza", price: 100, category: "pizza", emoji: "🍕" },
-    { id: 25, name: "Cheese Pizza", price: 120, category: "pizza", emoji: "🧀" },
-    { id: 26, name: "Onion Capsicum Pizza", price: 140, category: "pizza", emoji: "🍕" },
-    { id: 27, name: "Corn Cheese Pizza", price: 150, category: "pizza", emoji: "🌽" },
-    { id: 28, name: "Paneer Cheese Pizza", price: 160, category: "pizza", emoji: "🍕" },
-    { id: 29, name: "Double Cheese Pizza", price: 180, category: "pizza", emoji: "🧀" },
-    { id: 30, name: "Shyam Special Pizza", price: 200, category: "pizza", emoji: "⭐" },
-    { id: 31, name: "Cheese Burst Pizza", price: 240, category: "pizza", emoji: "🌋" },
-  ],
-  corn: [
-    { id: 32, name: "Sweet Corn", price: 40, category: "corn", emoji: "🌽" },
-    { id: 33, name: "Masala Corn", price: 60, category: "corn", emoji: "🌽" },
-  ],
-  bread: [
-    { id: 34, name: "Cheese Garlic Bread", price: 70, category: "bread", emoji: "🍞" },
-    { id: 35, name: "Paneer Garlic Bread", price: 80, category: "bread", emoji: "🧄" },
-  ],
-  bhel: [
-    { id: 36, name: "Cheese Bhel", price: 60, category: "bhel", emoji: "🥣" },
-    { id: 37, name: "Chips Chat Bhel", price: 50, category: "bhel", emoji: "🍲" },
-  ],
-  hotdog: [
-    { id: 38, name: "Masala Hotdog", price: 60, category: "hotdog", emoji: "🌭" },
-    { id: 39, name: "Cheese Hotdog", price: 70, category: "hotdog", emoji: "🧀" },
-    { id: 40, name: "Paneer Hotdog", price: 80, category: "hotdog", emoji: "🍖" },
-    { id: 41, name: "Cheese Paneer Hotdog", price: 90, category: "hotdog", emoji: "🧀" },
-  ],
-  pasta: [
-    { id: 42, name: "Red Sauce Pasta", price: 140, category: "pasta", emoji: "🍝" },
-    { id: 43, name: "White Sauce Pasta", price: 160, category: "pasta", emoji: "🍝" },
-  ],
-  shakesWithIceCream: [
-    { id: 44, name: "Oreo Shake with Ice Cream", price: 100, category: "shake", emoji: "🍪" },
-    { id: 45, name: "Chocolate Shake with Ice Cream", price: 100, category: "shake", emoji: "🍫" },
-    { id: 46, name: "Strawberry Shake with Ice Cream", price: 100, category: "shake", emoji: "🍓" },
-    { id: 47, name: "Vanilla Shake with Ice Cream", price: 100, category: "shake", emoji: "🍦" },
-    { id: 48, name: "Butter Scotch Shake with Ice Cream", price: 100, category: "shake", emoji: "🍮" },
-    { id: 49, name: "KitKat Shake with Ice Cream", price: 100, category: "shake", emoji: "🍫" },
-    { id: 50, name: "5 Star Chocolate Shake with Ice Cream", price: 100, category: "shake", emoji: "⭐" },
-  ],
-  combo: [
-    { id: 51, name: "Masala Maggi + Fries + Coke", price: 120, category: "combo", emoji: "🎯" },
-    { id: 52, name: "Masala Sandwich + Aloo Tikki Burger", price: 140, category: "combo", emoji: "🎯" },
-    { id: 53, name: "Veg Cheese Pizza + Samosa + Vanilla Shake", price: 200, category: "combo", emoji: "🎯" },
-    { id: 54, name: "Manchurian + Veg Noodles + Coke", price: 190, category: "combo", emoji: "🎯" },
-  ],
-};
+    <!-- Contact Form Modal -->
+    <div id="contact-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Get in Touch</h3>
+                <button class="modal-close" onclick="hideModal('contact-modal')">×</button>
+            </div>
+            <form id="contact-form" class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" id="contact-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" id="contact-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input type="text" id="contact-subject" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea id="contact-message" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">
+                    <span class="btn-text">Send Message</span>
+                    <span class="btn-loader hidden">Sending...</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
-        let cart = [];
-        let selectedTable = null;
-        let currentCategory = 'all';
-        let itemQuantities = {};
-
-        // Initialize the menu when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeMenu();
-            setupEventListeners();
-        });
-
-        function initializeMenu() {
-            showCategory('all');
-        }
-
-        function setupEventListeners() {
-            // Handle form submission
-            document.getElementById('checkoutForm').addEventListener('submit', handleOrderSubmission);
-        }
-
-        // Table selection
-        function selectTable(tableNumber) {
-            selectedTable = tableNumber;
-            document.querySelectorAll('.table-btn').forEach(btn => {
-                btn.classList.remove('ring-4', 'ring-yellow-400');
-                // Remove existing checkmarks
-                const checkmark = btn.querySelector('.absolute');
-                if (checkmark) checkmark.remove();
-            });
-            
-            const selectedBtn = event.target.closest('.table-btn');
-            selectedBtn.classList.add('ring-4', 'ring-yellow-400');
-            selectedBtn.style.position = 'relative';
-            selectedBtn.innerHTML += '<div class="absolute top-0 right-0 bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">✓</div>';
-        }
-
-        // Category functions
-        function showCategory(category) {
-            currentCategory = category;
-            
-            // Update active tab
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active', 'bg-primary', 'text-white');
-                tab.classList.add('bg-white', 'text-secondary');
-            });
-            
-            // Find the clicked tab and make it active
-            const activeTab = Array.from(document.querySelectorAll('.category-tab')).find(tab => 
-                tab.textContent.toLowerCase().includes(category === 'all' ? 'all items' : category)
-            );
-            if (activeTab) {
-                activeTab.classList.add('active', 'bg-primary', 'text-white');
-                activeTab.classList.remove('bg-white', 'text-secondary');
-            }
-
-            // Filter and display items
-            const menuGrid = document.getElementById('menuGrid');
-            menuGrid.innerHTML = '';
-
-            let itemsToShow = [];
-            if (category === 'all') {
-                itemsToShow = Object.values(menuData).flat();
-            } else {
-                itemsToShow = menuData[category] || [];
-            }
-
-            itemsToShow.forEach(item => {
-                const itemCard = createMenuItemCard(item);
-                menuGrid.appendChild(itemCard);
-            });
-        }
-
-        // Create menu item card
-        function createMenuItemCard(item) {
-            const card = document.createElement('div');
-            card.className = 'order-item bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all';
-            card.innerHTML = `
-                <div class="flex items-center justify-between mb-4">
-                    <div class="text-4xl">${item.emoji}</div>
-                    <div class="text-right">
-                        <div class="text-xl font-bold text-primary">₹${item.price}</div>
+    <!-- Add Booking Modal -->
+    <div id="add-booking-modal" class="modal hidden">
+        <div class="modal-content modal-content--large">
+            <div class="modal-header">
+                <h3>Add New Booking</h3>
+                <button class="modal-close" onclick="hideModal('add-booking-modal')">×</button>
+            </div>
+            <form id="add-booking-form" class="modal-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Client Name *</label>
+                        <input type="text" id="add-client-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Type *</label>
+                        <select id="add-service-type" class="form-control" required>
+                            <option value="">Select Service</option>
+                            <option value="Wedding">Wedding Photography</option>
+                            <option value="Pre-Wedding">Pre-Wedding Shoot</option>
+                            <option value="Event">Event Photography</option>
+                            <option value="Portrait">Portrait Photography</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Event Date *</label>
+                        <input type="date" id="add-event-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Package</label>
+                        <select id="add-package" class="form-control">
+                            <option value="">Select Package</option>
+                            <option value="Basic">Basic Package</option>
+                            <option value="Premium">Premium Package</option>
+                            <option value="Luxury">Luxury Package</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount *</label>
+                        <input type="number" id="add-amount" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="add-status" class="form-control">
+                            <option value="Inquiry">Inquiry</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Photographer</label>
+                        <select id="add-photographer" class="form-control">
+                            <option value="">Assign Photographer</option>
+                            <option value="Rakesh Baria">Rakesh Baria</option>
+                            <option value="Tushar Tank">Tushar Tank</option>
+                            <option value="Vinod Bhabhor">Vinod Bhabhor</option>
+                        </select>
                     </div>
                 </div>
-                <h3 class="text-lg font-semibold text-secondary mb-2">${item.name}</h3>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <button onclick="changeQuantity(${item.id}, -1)" class="quantity-btn bg-gray-200 hover:bg-gray-300 text-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold">-</button>
-                        <span id="qty-${item.id}" class="text-lg font-semibold min-w-8 text-center">0</span>
-                        <button onclick="changeQuantity(${item.id}, 1)" class="quantity-btn bg-primary hover:bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">+</button>
+                <button type="submit" class="btn btn--primary btn--full-width">Add Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Client Modal -->
+    <div id="add-client-modal" class="modal hidden">
+        <div class="modal-content modal-content--large">
+            <div class="modal-header">
+                <h3>Add New Client</h3>
+                <button class="modal-close" onclick="hideModal('add-client-modal')">×</button>
+            </div>
+            <form id="add-client-form" class="modal-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Client Name *</label>
+                        <input type="text" id="client-name" class="form-control" required>
                     </div>
-                    <button onclick="addToCart(${item.id})" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full font-semibold hover:scale-105 transition-all">
-                        Add to Cart
-                    </button>
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" id="client-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone *</label>
+                        <input type="tel" id="client-phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" id="client-address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Event Type</label>
+                        <select id="client-event-type" class="form-control">
+                            <option value="">Select Event Type</option>
+                            <option value="Wedding">Wedding</option>
+                            <option value="Pre-Wedding">Pre-Wedding</option>
+                            <option value="Event">Event</option>
+                            <option value="Portrait">Portrait</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Birthday</label>
+                        <input type="date" id="client-birthday" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Anniversary</label>
+                        <input type="date" id="client-anniversary" class="form-control">
+                    </div>
                 </div>
-            `;
-            return card;
-        }
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea id="client-notes" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Add Client</button>
+            </form>
+        </div>
+    </div>
 
-        function changeQuantity(itemId, change) {
-            if (!itemQuantities[itemId]) itemQuantities[itemId] = 0;
-            itemQuantities[itemId] = Math.max(0, itemQuantities[itemId] + change);
-            const qtyElement = document.getElementById(`qty-${itemId}`);
-            if (qtyElement) {
-                qtyElement.textContent = itemQuantities[itemId];
-            }
-        }
+    <!-- Add Expense Modal -->
+    <div id="add-expense-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Expense</h3>
+                <button class="modal-close" onclick="hideModal('add-expense-modal')">×</button>
+            </div>
+            <form id="add-expense-form" class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Category *</label>
+                    <select id="expense-category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Office">Office Supplies</option>
+                        <option value="Software">Software</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description *</label>
+                    <input type="text" id="expense-description" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amount *</label>
+                    <input type="number" id="expense-amount" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date *</label>
+                    <input type="date" id="expense-date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Add Expense</button>
+            </form>
+        </div>
+    </div>
 
-        function addToCart(itemId) {
-            if (!selectedTable) {
-                alert('🪑 Please select a table first!');
-                return;
-            }
+    <!-- Image Lightbox -->
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+            <button class="lightbox-close" onclick="hideLightbox()">×</button>
+            <button class="lightbox-prev" onclick="prevImage()">‹</button>
+            <button class="lightbox-next" onclick="nextImage()">›</button>
+        </div>
+    </div>
 
-            const quantity = itemQuantities[itemId] || 1;
-            if (quantity === 0) {
-                itemQuantities[itemId] = 1;
-                const qtyElement = document.getElementById(`qty-${itemId}`);
-                if (qtyElement) qtyElement.textContent = 1;
-            }
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
 
-            const item = Object.values(menuData).flat().find(i => i.id === itemId);
-            if (!item) return;
-
-            const existingItem = cart.find(i => i.id === itemId);
-
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({ ...item, quantity: quantity });
-            }
-
-            updateCartUI();
-            
-            // Reset quantity display
-            itemQuantities[itemId] = 0;
-            const qtyElement = document.getElementById(`qty-${itemId}`);
-            if (qtyElement) qtyElement.textContent = 0;
-
-            // Show add animation
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = '✅ Added!';
-            btn.classList.add('bg-green-500');
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove('bg-green-500');
-            }, 1000);
-        }
-
-        function updateCartUI() {
-            const cartCount = document.getElementById('cartCount');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            if (totalItems > 0) {
-                cartCount.parentElement.classList.add('animate-pulse');
-            } else {
-                cartCount.parentElement.classList.remove('animate-pulse');
-            }
-        }
-
-        function openCart() {
-            if (cart.length === 0) {
-                alert('🛒 Your cart is empty!');
-                return;
-            }
-            
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            
-            cartItems.innerHTML = '';
-            let total = 0;
-
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                
-                const cartItem = document.createElement('div');
-                cartItem.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg';
-                cartItem.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">${item.emoji}</span>
-                        <div>
-                            <div class="font-semibold">${item.name}</div>
-                            <div class="text-sm text-gray-600">₹${item.price} x ${item.quantity}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="font-bold text-primary">₹${itemTotal}</span>
-                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">🗑️</button>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-
-            cartTotal.textContent = `₹${total}`;
-            document.getElementById('cartModal').classList.remove('hidden');
-        }
-
-        function removeFromCart(itemId) {
-            cart = cart.filter(item => item.id !== itemId);
-            updateCartUI();
-            if (cart.length > 0) {
-                openCart(); // Refresh cart display
-            } else {
-                closeCart();
-            }
-        }
-
-        function closeCart() {
-            document.getElementById('cartModal').classList.add('hidden');
-        }
-
-        function proceedToCheckout() {
-            if (!selectedTable) {
-                alert('🪑 Please select a table first!');
-                return;
-            }
-            
-            closeCart();
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('checkoutTotal').textContent = `₹${total}`;
-            document.getElementById('selectedTableDisplay').textContent = `Table ${selectedTable}`;
-            document.getElementById('checkoutModal').classList.remove('hidden');
-        }
-
-        function closeCheckout() {
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
-
-        // Show loading modal
-        function showLoading() {
-            document.getElementById('loadingModal').classList.remove('hidden');
-        }
-
-        // Hide loading modal
-        function hideLoading() {
-            document.getElementById('loadingModal').classList.add('hidden');
-        }
-
-        // FIXED: Handle form submission
-        function handleOrderSubmission(e) {
-            e.preventDefault();
-            
-            // Show loading
-            showLoading();
-            
-            // Validate form data first
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim();
-            const customerEmail = document.getElementById('customerEmail').value.trim();
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            
-            // Validation
-            if (!customerName || customerName.length < 2) {
-                hideLoading();
-                alert('Please enter a valid name (at least 2 characters).');
-                return;
-            }
-            
-            if (!customerPhone || !/^\d{10}$/.test(customerPhone)) {
-                hideLoading();
-                alert('Please enter a valid 10-digit phone number.');
-                return;
-            }
-            
-            if (!selectedTable) {
-                hideLoading();
-                alert('Please select a table.');
-                return;
-            }
-            
-            if (!cart || cart.length === 0) {
-                hideLoading();
-                alert('Please add items to your cart.');
-                return;
-            }
-
-            // Prepare order data
-            const orderData = {
-                orderId: 'SS' + Date.now(),
-                customerName: customerName,
-                customerPhone: customerPhone,
-                customerEmail: customerEmail || '',
-                paymentMethod: paymentMethod,
-                tableNumber: selectedTable,
-                items: cart.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    emoji: item.emoji
-                })),
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                timestamp: new Date().toISOString(),
-                status: 'pending'
-            };
-
-            console.log('Submitting order:', orderData);
-            
-            // Submit to Google Apps Script
-            submitOrderToGoogleSheets(orderData)
-                .then(response => {
-                    console.log('Order response:', response);
-                    hideLoading();
-                    closeCheckout();
-                    showSuccessModal(orderData.orderId);
-                    
-                    // Clear cart and reset form after successful order
-                    cart = [];
-                    selectedTable = null;
-                    itemQuantities = {};
-                    updateCartUI();
-                    document.getElementById('checkoutForm').reset();
-                    
-                    // Reset table selection
-                    document.querySelectorAll('.table-btn').forEach(btn => {
-                        btn.classList.remove('ring-4', 'ring-yellow-400');
-                        const checkmark = btn.querySelector('.absolute');
-                        if (checkmark) checkmark.remove();
-                    });
-                })
-                .catch(error => {
-                    console.error('Order submission failed:', error);
-                    hideLoading();
-                    alert('Failed to place order. Please try again or contact staff.');
-                });
-        }
-
-        // FIXED: Submit order to Google Sheets
-       async function submitOrderToGoogleSheets(orderData) {
-    if (!GOOGLE_SCRIPT_URL) {
-        throw new Error('Google Apps Script URL not configured');
-    }
-
-    try {
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain', // Change this
-            },
-            body: JSON.stringify(orderData)
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        
-        if (!result.success) {
-            throw new Error(result.message || 'Order submission failed');
-        }
-
-        return result;
-
-    } catch (error) {
-        console.error('Network error:', error);
-        throw new Error('Network error: Unable to submit order');
-    }
-}
-        // Show success modal
-        function showSuccessModal(orderId) {
-            document.getElementById('orderIdDisplay').textContent = orderId;
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-
-        // Close success modal
-        function closeSuccess() {
-            document.getElementById('successModal').classList.add('hidden');
-        }
-
-        // Utility function to generate random order ID
-        function generateOrderId() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 1000);
-            return `SS${timestamp}${random}`;
-        }
-
-        // Test function for debugging
-        function testOrder() {
-            const testOrderData = {
-                orderId: generateOrderId(),
-                customerName: 'Test Customer',
-                customerPhone: '9999999999',
-                customerEmail: 'test@example.com',
-                paymentMethod: 'cash',
-                tableNumber: 1,
-                items: [
-                    { id: 1, name: 'Veg Sandwich', price: 60, quantity: 1, emoji: '🥪' },
-                    { id: 15, name: 'Tea', price: 20, quantity: 2, emoji: '☕' }
-                ],
-                total: 100,
-                timestamp: new Date().toISOString(),
-                status: 'pending'
-            };
-
-            console.log('Testing order submission...');
-            submitOrderToGoogleSheets(testOrderData)
-                .then(response => {
-                    console.log('Test order successful:', response);
-                    alert('Test order submitted successfully!');
-                })
-                .catch(error => {
-                    console.error('Test order failed:', error);
-                    alert('Test order failed: ' + error.message);
-                });
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
